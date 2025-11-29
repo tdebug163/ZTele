@@ -28,7 +28,7 @@ from ..core.logger import logging
 LOGS = logging.getLogger(__name__)
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 MEDIA_PATH_REGEX = re.compile(r"(:?\<\bmedia:(:?(?:.*?)+)\>)")
-tr = Config.COMMAND_HAND_LER
+# tr = Config.COMMAND_HAND_LER # هذي مالها داعي هنا
 
 def ibuild_keyboard(buttons):
     keyb = []
@@ -45,9 +45,9 @@ async def inline_handler(event):  # sourcery no-metrics
     result = None
     query = event.text
     string = query.lower()
-    query.split(" ", 2)
+    # query.split(" ", 2) # عمليات بلا فائدة
     str_y = query.split(" ", 1)
-    string.split()
+    
     query_user_id = event.query.user_id
     if query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS:
         if str_y[0].lower() == "ytdl" and len(str_y) == 2:
@@ -109,47 +109,38 @@ async def inline_handler(event):  # sourcery no-metrics
             try:
                 await event.answer([result] if result else None)
             except QueryIdInvalidError:
-                await event.answer(
-                    [
-                        builder.article(
-                            title="Not Found",
-                            text=f"No Results found for `{str_y[1]}`",
-                            description="INVALID",
-                        )
-                    ]
-                )
+                pass 
         elif string == "pmpermit":
             controlpmch = gvarstatus("pmchannel") or None
+            buttons = [[Button.url("𝗭𝗧𝗵𝗼𝗻", "https://t.me/ZThon")]]
             if controlpmch is not None:
                 zchannel = controlpmch.replace("@", "")
                 buttons = [[Button.url("⌔ قنـاتـي ⌔", f"https://t.me/{zchannel}")]]
-            else:
-                buttons = [[Button.url("𝗭𝗧𝗵𝗼𝗻", "https://t.me/ZThon")]]
+            
             PM_PIC = gvarstatus("pmpermit_pic")
+            ZZZ_IMG = None
             if PM_PIC:
-                CAT = [x for x in PM_PIC.split()]
-                PIC = list(CAT)
+                PIC = list([x for x in PM_PIC.split()])
                 ZZZ_IMG = random.choice(PIC)
-            else:
-                ZZZ_IMG = None
-            query = gvarstatus("pmpermit_text")
+            
+            query = gvarstatus("pmpermit_text") or "ZThon Userbot Security"
+            
             if ZZZ_IMG and ZZZ_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     ZZZ_IMG,
-                    # title="Alive zzz",
                     text=query,
                     buttons=buttons,
                 )
             elif ZZZ_IMG:
                 result = builder.document(
                     ZZZ_IMG,
-                    title="Alive zzz",
+                    title="Alive",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="Alive zzz",
+                    title="Alive",
                     text=query,
                     buttons=buttons,
                 )
