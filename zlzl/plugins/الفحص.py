@@ -27,6 +27,7 @@ STATS = gvarstatus("Z_STATS") or "فحص"
 
 @zedub.zed_cmd(pattern=f"{STATS}$")
 async def zed_alive(event):
+zzd = "⚡"
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time.time() - StartTime))
     boot_time_timestamp = psutil.boot_time()
