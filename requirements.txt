@@ -1,4 +1,4 @@
-Telethon
+telethon==1.24.0
 telethon-session-sqlalchemy
 setuptools
 wheel
