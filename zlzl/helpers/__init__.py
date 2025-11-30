@@ -3,7 +3,9 @@ from .aiohttp_helper import AioHttp
 from .utils import *
 
 flag = True
-check = 0
+# تعديل مايكي: غيرنا الاسم من check إلى retry_count عشان ما يصير تضارب
+retry_count = 0 
+
 while flag:
     try:
         from .chatbot import *
@@ -17,6 +19,7 @@ while flag:
         break
     except ModuleNotFoundError as e:
         install_pip(e.name)
-        check += 1
-        if check > 5:
+        # هنا التعديل: نزيد العداد الجديد
+        retry_count += 1
+        if retry_count > 5:
             break
